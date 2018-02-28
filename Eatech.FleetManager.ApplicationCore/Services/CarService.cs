@@ -31,7 +31,7 @@ namespace Eatech.FleetManager.ApplicationCore.Services
             }
         };
 
-        public async Task<IEnumerable<Car>> GetAll()
+        public async Task<IEnumerable<Car>> GetAll(Dictionary<string, string> search)
         {
             return await Task.FromResult(TempCars);
         }
@@ -41,42 +41,33 @@ namespace Eatech.FleetManager.ApplicationCore.Services
             return await Task.FromResult(TempCars.FirstOrDefault(c => c.Id == id));
         }
 
-        public async Task<Car> Add(Guid Id, int ModelYear, string Model, string Manufacturer)
+        public async Task<Car> Add(Car car)
         {
-            Car car = new Car
-            {
-                Id = Id,
-                ModelYear = ModelYear,
-                Model = Model,
-                Manufacturer = Manufacturer
-            };
-
             TempCars.Add(car);
             return await Task.FromResult(car);
         }
 
-        public async Task<Car> Add(Car car)
+        public async Task<Car> Update(
+            Guid Id, 
+            int? ModelYear = null, 
+            string Model = null, 
+            string Manufacturer = null, 
+            string Registration = null, 
+            DateTime? InspectionDate = null, 
+            float? EngineSize = null, 
+            float? EnginePower = null)
         {
-            return await Add(car.Id, car.ModelYear, car.Model, car.Manufacturer);
-        }
+            Car car = await Remove(Id) ?? new Car();
 
-        public async Task<Car> Update(Guid Id, int? ModelYear = null, string Model = null, string Manufacturer = null)
-        {
-            Car car = await Remove(Id);
-            if (ModelYear != null)
-            {
-                car.ModelYear = (int) ModelYear;
-            }
+            car.Id = Id;
+            car.ModelYear = ModelYear ?? car.ModelYear;
+            car.Model = Model ?? car.Model;
+            car.Manufacturer = Manufacturer ?? car.Manufacturer;
+            car.Registration = Registration ?? car.Registration;
+            car.InspectionDate = InspectionDate ?? car.InspectionDate;
+            car.EngineSize = EngineSize ?? car.EngineSize;
+            car.EnginePower = EnginePower ?? car.EnginePower;
 
-            if (Model != null)
-            {
-                car.Model = Model;
-            }
-
-            if (Manufacturer != null)
-            {
-                car.Manufacturer = Manufacturer;
-            }
             return await Add(car);
         }
 
@@ -86,12 +77,9 @@ namespace Eatech.FleetManager.ApplicationCore.Services
             if (car != null)
             {
                 TempCars.Remove(car);
-                return await Task.FromResult(car);
             }
-            else
-            {
-                return await Task.FromResult(car);
-            }
+            return await Task.FromResult(car);
+            
         }
 
     }

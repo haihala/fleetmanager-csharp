@@ -13,7 +13,7 @@ namespace Eatech.FleetManager.UnitTests.ApplicationCore.Services.CarServiceTests
         {
             ICarService carService = new CarService();
 
-            var cars = (await carService.GetAll()).ToList();
+            var cars = (await carService.GetAll(new System.Collections.Generic.Dictionary<string, string>())).ToList();
 
             Assert.NotNull(cars);
             Assert.NotEmpty(cars);

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Threading.Tasks;
 using Eatech.FleetManager.ApplicationCore.Entities;
 using Eatech.FleetManager.ApplicationCore.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System.Web;
 
 namespace Eatech.FleetManager.Web.Controllers
 {
@@ -24,7 +26,7 @@ namespace Eatech.FleetManager.Web.Controllers
         [HttpGet]
         public async Task<IEnumerable<CarDto>> Get()
         {
-            return (await _carService.GetAll()).Select(car => new CarDto (car));
+            return (await _carService.GetAll(new Dictionary<string, string>())).Select(car => new CarDto (car));
         }
 
         /// <summary>
@@ -50,27 +52,17 @@ namespace Eatech.FleetManager.Web.Controllers
         {
             // Some authentication should take place in the final product.
             // Sanitation too
-            var car = await _carService.Get(id);
-            if (car == null)
-            {
-                // Car with this id doesn't exist, add.
-                return Ok(new CarDto(await _carService.Add(
-                    id,
-                    ModelYear: (int?)Int32.Parse(Request.Form["ModelYear"].ToString()),
-                    Model: Request.Form["Model"],
-                    Manufacturer: Request.Form["Manufacturer"]
-                    )));
-            }
-            else
-            {
-                // Car with this id exists, update with given info
-                return Ok(new CarDto(await _carService.Update(
-                    id,
-                    ModelYear: (int?)Int32.Parse(Request.Form["ModelYear"].ToString()),
-                    Model: Request.Form["Model"],
-                    Manufacturer: Request.Form["Manufacturer"]
-                    )));
-            }
+
+            return Ok(new CarDto(await _carService.Update(
+                id,
+                ModelYear: int.TryParse(Request.Form["ModelYear"], out int year) ? (int?)year : null,
+                Model: Request.Form["Model"],
+                Manufacturer: Request.Form["Manufacturer"],
+                Registration: Request.Form["Registration"],
+                InspectionDate: DateTime.TryParse(Request.Form["InspectionDate"], out DateTime inspectionDate) ? (DateTime?) inspectionDate : null,
+                EngineSize: float.TryParse(Request.Form["EngineSize"], out float engineSize) ? (float?)engineSize : null,
+                EnginePower: float.TryParse(Request.Form["EnginePower"], out float EnginePower) ? (float?)EnginePower : null
+                )));
         }
 
         /// <summary>
