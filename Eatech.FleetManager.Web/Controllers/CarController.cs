@@ -72,5 +72,20 @@ namespace Eatech.FleetManager.Web.Controllers
                     )));
             }
         }
+
+        /// <summary>
+        ///     Example HTTP DELETE: api/car/570890e2-8007-4e5c-a8d6-c3f670d8a9be
+        ///     Removes the car with given id if it exists.
+        /// </summary>
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Remove(Guid id)
+        {
+            var car = await _carService.Remove(id);
+            if (car == null)
+            {
+                return NotFound();
+            }
+            return Ok(new CarDto(car));
+        }
     }
 }
