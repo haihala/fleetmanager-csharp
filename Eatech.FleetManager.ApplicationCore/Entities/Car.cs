@@ -6,10 +6,18 @@ namespace Eatech.FleetManager.ApplicationCore.Entities
     {
         public Guid Id { get; set; }
 
-        public int ModelYear { get; set; }
+        public int? ModelYear { get; set; }
 
         public string Model { get; set; }
 
         public string Manufacturer { get; set; }
+
+        public string Registration { get; set; }
+
+        public DateTime? InspectionDate { get; set; }
+
+        public float? EngineSize { get; set; }
+
+        public float? EnginePower { get; set; }
     }
 }
