@@ -82,9 +82,16 @@ namespace Eatech.FleetManager.ApplicationCore.Services
 
         public async Task<Car> Remove(Guid Id)
         {
-            Car car = Get(Id).Result;
-            TempCars.Remove(car);
-            return await Task.FromResult(car);
+            Car car = await Get(Id);
+            if (car != null)
+            {
+                TempCars.Remove(car);
+                return await Task.FromResult(car);
+            }
+            else
+            {
+                return await Task.FromResult(car);
+            }
         }
 
     }
