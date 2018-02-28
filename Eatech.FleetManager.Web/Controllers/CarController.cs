@@ -24,10 +24,12 @@ namespace Eatech.FleetManager.Web.Controllers
         [HttpGet]
         public async Task<IEnumerable<CarDto>> Get()
         {
-            return (await _carService.GetAll()).Select(c => new CarDto
+            return (await _carService.GetAll()).Select(car => new CarDto
             {
-                Id = c.Id,
-                ModelYear = c.ModelYear
+                Id = car.Id,
+                ModelYear = car.ModelYear,
+                Model = car.Model,
+                Manufacturer = car.Manufacturer
             });
         }
 
@@ -43,10 +45,12 @@ namespace Eatech.FleetManager.Web.Controllers
                 return NotFound();
             }
 
-            return Ok(new CarDto
+            return Ok(new CarDto 
             {
                 Id = car.Id,
-                ModelYear = car.ModelYear
+                ModelYear = car.ModelYear,
+                Model = car.Model,
+                Manufacturer = car.Manufacturer
             });
         }
     }
