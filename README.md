@@ -1,7 +1,7 @@
 # Fleetmanager
 
-## Installation
-Identical to the original foundation.
+## Installation and launching
+Identical to the original software.
 
 ## Api calls
 
@@ -15,7 +15,7 @@ Returns all cars in the system. Accepts `minYear`, `maxYear`, `model` and `manuf
 
 Example:
 
-```/api/car/?minYear=1999&maxYear=2010&model=yaris&manufacturer&toyota```
+`/api/car/?minYear=1999&maxYear=2010&model=yaris&manufacturer&toyota`
 
 Returns all the Toyota Yaris cars made between 1999 and 2010.
 
@@ -28,7 +28,7 @@ Returns all data the system has on a car with the given id.
 
 Example:
 
-```/api/car/8e22ef2a-16b5-4c63-81fd-16795725d766```
+`/api/car/8e22ef2a-16b5-4c63-81fd-16795725d766`
 
 Returns a car made in 1999 from manufacturer 'make10' of model 'model7' with registration 'NJY-102' that was last inspected on the 23rd of march 2018, has an 2981 sized engine that produces 382 power. (seed data)
 
@@ -52,7 +52,7 @@ All of the fields mentioned above can be missing.
 
 Either modifies or adds a car with given id depending on whether or not such car already exists.
 
-Returns the new or modified car similarly to how HTTP GET on ```/api/car/{id}``` returns cars.
+Returns the new or modified car similarly to how HTTP GET on `/api/car/{id}` returns cars.
 
 ### HTTP DELETE
 
