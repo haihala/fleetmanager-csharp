@@ -26,7 +26,7 @@ namespace Eatech.FleetManager.Web.Controllers
         [HttpGet]
         public async Task<IEnumerable<CarDto>> Get()
         {
-            return (await _carService.GetAll(new Dictionary<string, string>())).Select(car => new CarDto (car));
+            return (await _carService.GetAll()).Select(car => new CarDto (car));
         }
 
         /// <summary>
@@ -43,6 +43,7 @@ namespace Eatech.FleetManager.Web.Controllers
 
             return Ok(new CarDto(car));
         }
+
         /// <summary>
         ///     Example HTTP POST: api/car/570890e2-8007-4e5c-a8d6-c3f670d8a9be
         ///     Example adds a car with id 570890e2-8007-4e5c-a8d6-c3f670d8a9be, null year, null model and null manufacturer.

@@ -7,7 +7,7 @@ namespace Eatech.FleetManager.ApplicationCore.Interfaces
 {
     public interface ICarService
     {
-        Task<IEnumerable<Car>> GetAll(Dictionary<string, string> search);
+        Task<IEnumerable<Car>> GetAll();
 
         Task<Car> Get(Guid id);
 

@@ -1,50 +1,64 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
 using Eatech.FleetManager.ApplicationCore.Entities;
 using Eatech.FleetManager.ApplicationCore.Interfaces;
+using Microsoft.Data.Sqlite;
 
 namespace Eatech.FleetManager.ApplicationCore.Services
 {
     public class CarService : ICarService
     {
-        /// <summary>
-        ///     Remove this. Temporary car storage before proper data storage is implemented.
-        /// </summary>
-        private static readonly List<Car> TempCars = new List<Car>
+        SqliteConnection DBConnection;
+        public CarService ()
         {
-            new Car
-            {
-                Id = Guid.Parse("d9417f10-5c79-44a0-9137-4eba914a82a9"),
-                ModelYear = 1998,
-                Model = "escort",
-                Manufacturer = "Ford"
-            },
-            new Car
-            {
-                Id = Guid.NewGuid(),
-                ModelYear = 2007,
-                Model = "yaris",
-                Manufacturer = "Toyota"
-            }
-        };
+            DBConnection = new SqliteConnection("Data Source=../Eatech.FleetManager.ApplicationCore/database.sqlite;");
+            DBConnection.Open();
+        }
 
-        public async Task<IEnumerable<Car>> GetAll(Dictionary<string, string> search)
+
+        public async Task<IEnumerable<Car>> GetAll()
         {
-            return await Task.FromResult(TempCars);
+            SqliteCommand command = new SqliteCommand("SELECT * FROM cars", DBConnection);
+            SqliteDataReader reader = await command.ExecuteReaderAsync();
+            return CarsFromQuery(reader);
         }
 
         public async Task<Car> Get(Guid id)
         {
-            return await Task.FromResult(TempCars.FirstOrDefault(c => c.Id == id));
+            SqliteCommand command = new SqliteCommand(String.Format("SELECT * FROM cars WHERE Id = '{0}'", id), DBConnection);
+            SqliteDataReader reader = await command.ExecuteReaderAsync();
+            List<Car> result = CarsFromQuery(reader);
+            if (result.Count > 0)
+            {
+                return result[0];
+            }
+
+            return null;
         }
 
         public async Task<Car> Add(Car car)
         {
-            TempCars.Add(car);
-            return await Task.FromResult(car);
+            string query = String.Format(
+                "INSERT INTO cars " +
+                "(Id, ModelYear, Model, Manufacturer, Registration, InspectionDate, EngineSize, EnginePower) " +
+                "values " +
+                "('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}')",
+                car.Id.ToString(),
+                car.ModelYear,
+                car.Model,
+                car.Manufacturer,
+                car.Registration,
+                car.InspectionDate.ToString(),
+                car.EngineSize,
+                car.EnginePower
+                );
+
+            SqliteCommand command = new SqliteCommand(query, DBConnection);
+            command.ExecuteNonQuery();
+            
+            return await Get(car.Id);
         }
 
         public async Task<Car> Update(
@@ -71,16 +85,35 @@ namespace Eatech.FleetManager.ApplicationCore.Services
             return await Add(car);
         }
 
-        public async Task<Car> Remove(Guid Id)
+        public async Task<Car> Remove(Guid id)
         {
-            Car car = await Get(Id);
-            if (car != null)
-            {
-                TempCars.Remove(car);
-            }
-            return await Task.FromResult(car);
+            Car car = await Get(id);
+
+            SqliteCommand command = new SqliteCommand(String.Format("DELETE FROM cars WHERE Id = '{0}'", id), DBConnection);
+            command.ExecuteNonQuery();
             
+            return car;
         }
 
+    
+        private List<Car> CarsFromQuery(SqliteDataReader reader)
+        {
+            List<Car> cars = new List<Car>();
+            while (reader.Read())
+            {
+                cars.Add(new Car
+                {
+                    Id = Guid.Parse(reader["Id"].ToString()),
+                    ModelYear = int.TryParse(reader["ModelYear"].ToString(), out int year) ? (int?)year : null,
+                    Model = reader["Model"]?.ToString(),
+                    Manufacturer = reader["Manufacturer"]?.ToString(),
+                    Registration = reader["Registration"]?.ToString(),
+                    InspectionDate = DateTime.TryParse(reader["InspectionDate"].ToString(), out DateTime inspectionDate) ? (DateTime?)inspectionDate : null,
+                    EngineSize = float.TryParse(reader["EngineSize"].ToString(), out float engineSize) ? (float?)engineSize : null,
+                    EnginePower = float.TryParse(reader["EnginePower"].ToString(), out float EnginePower) ? (float?)EnginePower : null
+                });
+            }
+        return cars;
+        }
     }
 }
