@@ -29,23 +29,23 @@ namespace Eatech.FleetManager.ApplicationCore.Services
 
             if (minYear != null)
             {
-                queryExtention = String.Format("WHERE ModelYear > {0}", minYear);
+                queryExtention = String.Format(" WHERE ModelYear > {0}", minYear);
             }
 
             if (maxYear != null)
             {
-                queryExtention += queryExtention == "" ? "WHERE " : " AND ";
+                queryExtention += queryExtention == "" ? " WHERE " : " AND ";
                 queryExtention += String.Format("ModelYear < {0}", maxYear);
             }
             if (model != null)
             {
-                queryExtention += queryExtention == "" ? "WHERE " : " AND ";
-                queryExtention += String.Format("Model = {0}", model);
+                queryExtention += queryExtention == "" ? " WHERE " : " AND ";
+                queryExtention += String.Format("Model = '{0}'", model);
             }
             if (manufacturer != null)
             {
-                queryExtention += queryExtention == "" ? "WHERE " : " AND ";
-                queryExtention += String.Format("Manufacturer = {0}", manufacturer);
+                queryExtention += queryExtention == "" ? " WHERE " : " AND ";
+                queryExtention += String.Format("Manufacturer = '{0}'", manufacturer);
             }
 
             query += queryExtention;
