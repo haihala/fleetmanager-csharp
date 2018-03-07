@@ -137,13 +137,13 @@ namespace Eatech.FleetManager.ApplicationCore.Services
                 cars.Add(new Car
                 {
                     Id = Guid.Parse(reader["Id"].ToString()),
-                    ModelYear = int.TryParse(reader["ModelYear"].ToString(), out int year) ? (int?)year : null,
+                    ModelYear = int.TryParse(reader["ModelYear"].ToString(), out int year) ? (int?) year : null,
                     Model = reader["Model"]?.ToString(),
                     Manufacturer = reader["Manufacturer"]?.ToString(),
                     Registration = reader["Registration"]?.ToString(),
-                    InspectionDate = DateTime.TryParse(reader["InspectionDate"].ToString(), out DateTime inspectionDate) ? (DateTime?)inspectionDate : null,
-                    EngineSize = int.TryParse(reader["EngineSize"].ToString(), out int engineSize) ? (int?)engineSize : null,
-                    EnginePower = int.TryParse(reader["EnginePower"].ToString(), out int EnginePower) ? (int?)EnginePower : null
+                    InspectionDate = DateTime.TryParse(reader["InspectionDate"].ToString(), out DateTime inspectionDate) ? (DateTime?) inspectionDate : null,
+                    EngineSize = int.TryParse(reader["EngineSize"].ToString(), out int engineSize) ? (int?) engineSize : null,
+                    EnginePower = int.TryParse(reader["EnginePower"].ToString(), out int EnginePower) ? (int?) EnginePower : null
                 });
             }
         return cars;
