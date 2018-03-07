@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Linq;
 using System.Threading.Tasks;
 using Eatech.FleetManager.ApplicationCore.Entities;
 using Eatech.FleetManager.ApplicationCore.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using System.Web;
 
 namespace Eatech.FleetManager.Web.Controllers
 {
