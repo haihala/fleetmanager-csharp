@@ -102,10 +102,10 @@ namespace Eatech.FleetManager.ApplicationCore.Services
             string manufacturer = null, 
             string registration = null, 
             DateTime? inspectionDate = null, 
-            float? engineSize = null, 
-            float? enginePower = null)
+            int? engineSize = null, 
+            int? enginePower = null)
         {
-            Car car = await Remove(Id) ?? new Car();
+            Car car = await Remove(id) ?? new Car();
 
             car.Id = id;
             car.ModelYear = modelYear ?? car.ModelYear;
@@ -143,8 +143,8 @@ namespace Eatech.FleetManager.ApplicationCore.Services
                     Manufacturer = reader["Manufacturer"]?.ToString(),
                     Registration = reader["Registration"]?.ToString(),
                     InspectionDate = DateTime.TryParse(reader["InspectionDate"].ToString(), out DateTime inspectionDate) ? (DateTime?)inspectionDate : null,
-                    EngineSize = float.TryParse(reader["EngineSize"].ToString(), out float engineSize) ? (float?)engineSize : null,
-                    EnginePower = float.TryParse(reader["EnginePower"].ToString(), out float EnginePower) ? (float?)EnginePower : null
+                    EngineSize = int.TryParse(reader["EngineSize"].ToString(), out int engineSize) ? (int?)engineSize : null,
+                    EnginePower = int.TryParse(reader["EnginePower"].ToString(), out int EnginePower) ? (int?)EnginePower : null
                 });
             }
         return cars;

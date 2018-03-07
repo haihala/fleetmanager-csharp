@@ -16,9 +16,9 @@ namespace Eatech.FleetManager.ApplicationCore.Entities
 
         public DateTime? InspectionDate { get; set; }
 
-        public float? EngineSize { get; set; }
+        public int? EngineSize { get; set; }
 
-        public float? EnginePower { get; set; }
+        public int? EnginePower { get; set; }
 
 
         public CarDto (Car car)

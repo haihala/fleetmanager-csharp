@@ -24,8 +24,8 @@ namespace Eatech.FleetManager.ApplicationCore.Interfaces
             string manufacturer = null, 
             string registration = null, 
             DateTime? inspectionDate = null, 
-            float? engineSize = null, 
-            float? enginePower = null);
+            int? engineSize = null, 
+            int? enginePower = null);
 
         Task<Car> Remove(Guid Id);
     }

@@ -66,8 +66,8 @@ namespace Eatech.FleetManager.Web.Controllers
                 manufacturer: Request.Form["Manufacturer"],
                 registration: Request.Form["Registration"],
                 inspectionDate: DateTime.TryParse(Request.Form["InspectionDate"], out DateTime inspectionDate) ? (DateTime?) inspectionDate : null,
-                engineSize: float.TryParse(Request.Form["EngineSize"], out float engineSize) ? (float?)engineSize : null,
-                enginePower: float.TryParse(Request.Form["EnginePower"], out float EnginePower) ? (float?)EnginePower : null
+                engineSize: int.TryParse(Request.Form["EngineSize"], out int engineSize) ? (int?)engineSize : null,
+                enginePower: int.TryParse(Request.Form["EnginePower"], out int EnginePower) ? (int?)EnginePower : null
                 )));
         }
 
