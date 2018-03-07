@@ -45,7 +45,6 @@ namespace Eatech.FleetManager.Web.Controllers
             {
                 return NotFound();
             }
-
             return Ok(new CarDto(car));
         }
 

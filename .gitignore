@@ -301,6 +301,9 @@ __pycache__/
 
 # OpenCover UI analysis results
 OpenCover/
+<<<<<<< HEAD
 
 # Editor folder
 .vscode/
+=======
+>>>>>>> 48471f02221968e9fc4e68c72770983ee9ba75d7
