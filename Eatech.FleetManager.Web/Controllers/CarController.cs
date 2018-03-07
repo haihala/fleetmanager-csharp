@@ -26,12 +26,21 @@ namespace Eatech.FleetManager.Web.Controllers
         [HttpGet]
         public async Task<IEnumerable<CarDto>> Get()
         {
+            return (await _carService.GetAll()).Select(car => new CarDto (car));
+        }
+
+        /// <summary>
+        ///     Example HTTP POST: api/car with any combination of the following params: MinYear, MaxYear, Model, Manufacturer
+        /// </summary>
+        [HttpPost]
+        public async Task<IEnumerable<CarDto>> Post()
+        {
             return (await _carService.GetAll(
                 minYear: int.TryParse(Request.Form["MinYear"], out int year) ? (int?)year : null,
                 maxYear: int.TryParse(Request.Form["MaxYear"], out year) ? (int?)year : null,
                 model: Request.Form["Model"],
                 manufacturer: Request.Form["Manufacturer"]
-                )).Select(car => new CarDto (car));
+                )).Select(car => new CarDto(car));
         }
 
         /// <summary>
