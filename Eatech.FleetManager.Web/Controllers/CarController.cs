@@ -26,7 +26,12 @@ namespace Eatech.FleetManager.Web.Controllers
         [HttpGet]
         public async Task<IEnumerable<CarDto>> Get()
         {
-            return (await _carService.GetAll()).Select(car => new CarDto (car));
+            return (await _carService.GetAll(
+                minYear: int.TryParse(Request.Form["MinYear"], out int year) ? (int?)year : null,
+                maxYear: int.TryParse(Request.Form["MaxYear"], out year) ? (int?)year : null,
+                model: Request.Form["Model"],
+                manufacturer: Request.Form["Manufacturer"]
+                )).Select(car => new CarDto (car));
         }
 
         /// <summary>
@@ -56,13 +61,13 @@ namespace Eatech.FleetManager.Web.Controllers
 
             return Ok(new CarDto(await _carService.Update(
                 id,
-                ModelYear: int.TryParse(Request.Form["ModelYear"], out int year) ? (int?)year : null,
-                Model: Request.Form["Model"],
-                Manufacturer: Request.Form["Manufacturer"],
-                Registration: Request.Form["Registration"],
-                InspectionDate: DateTime.TryParse(Request.Form["InspectionDate"], out DateTime inspectionDate) ? (DateTime?) inspectionDate : null,
-                EngineSize: float.TryParse(Request.Form["EngineSize"], out float engineSize) ? (float?)engineSize : null,
-                EnginePower: float.TryParse(Request.Form["EnginePower"], out float EnginePower) ? (float?)EnginePower : null
+                modelYear: int.TryParse(Request.Form["ModelYear"], out int year) ? (int?)year : null,
+                model: Request.Form["Model"],
+                manufacturer: Request.Form["Manufacturer"],
+                registration: Request.Form["Registration"],
+                inspectionDate: DateTime.TryParse(Request.Form["InspectionDate"], out DateTime inspectionDate) ? (DateTime?) inspectionDate : null,
+                engineSize: float.TryParse(Request.Form["EngineSize"], out float engineSize) ? (float?)engineSize : null,
+                enginePower: float.TryParse(Request.Form["EnginePower"], out float EnginePower) ? (float?)EnginePower : null
                 )));
         }
 

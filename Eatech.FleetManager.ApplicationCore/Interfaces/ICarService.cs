@@ -7,21 +7,25 @@ namespace Eatech.FleetManager.ApplicationCore.Interfaces
 {
     public interface ICarService
     {
-        Task<IEnumerable<Car>> GetAll();
+        Task<IEnumerable<Car>> GetAll(
+            int? minYear = null,
+            int? maxYear = null,
+            string model = null,
+            string manufacturer = null);
 
         Task<Car> Get(Guid id);
 
         Task<Car> Add(Car car);
 
         Task<Car> Update(
-            Guid Id, 
-            int? ModelYear = null, 
-            string Model = null, 
-            string Manufacturer = null, 
-            string Registration = null, 
-            DateTime? InspectionDate = null, 
-            float? EngineSize = null, 
-            float? EnginePower = null);
+            Guid id, 
+            int? modelYear = null, 
+            string model = null, 
+            string manufacturer = null, 
+            string registration = null, 
+            DateTime? inspectionDate = null, 
+            float? engineSize = null, 
+            float? enginePower = null);
 
         Task<Car> Remove(Guid Id);
     }
