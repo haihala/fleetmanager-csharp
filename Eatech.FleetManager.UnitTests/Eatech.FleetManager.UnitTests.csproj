@@ -17,4 +17,8 @@
     <ProjectReference Include="..\Eatech.FleetManager.ApplicationCore\Eatech.FleetManager.ApplicationCore.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Web\CarControllerTests\" />
+  </ItemGroup>
+
 </Project>
