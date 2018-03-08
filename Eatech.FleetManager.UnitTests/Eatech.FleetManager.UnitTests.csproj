@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Eatech.FleetManager.ApplicationCore\Eatech.FleetManager.ApplicationCore.csproj" />
+    <ProjectReference Include="..\Eatech.FleetManager.Web\Eatech.FleetManager.Web.csproj" />
   </ItemGroup>
 
   <ItemGroup>
