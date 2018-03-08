@@ -3,6 +3,7 @@ using System.Linq;
 using Eatech.FleetManager.ApplicationCore.Interfaces;
 using Eatech.FleetManager.ApplicationCore.Services;
 using Xunit;
+using Eatech.FleetManager.ApplicationCore.Entities;
 
 namespace Eatech.FleetManager.UnitTests.ApplicationCore.Services.CarServiceTests
 {
@@ -50,9 +51,9 @@ namespace Eatech.FleetManager.UnitTests.ApplicationCore.Services.CarServiceTests
         public async void NonExistingCardWithId()
         {
             ICarService carService = new CarService();
-            var carId = Guid.Parse("d9417f10-1111-1111-1111-4eba914a82a9");
+            Guid carId = Guid.Parse("d9417f10-1111-1111-1111-4eba914a82a9");
 
-            var car = await carService.Get(carId);
+            Car car = await carService.Get(carId);
 
             Assert.Null(car);
         }

@@ -36,7 +36,7 @@ namespace Eatech.FleetManager.UnitTests.ApplicationCore.Services.CarServiceTests
             Car car1 = await carService.Update(id);
             Car car2 = await carService.Remove(id);
             
-            Assert.Equal(car1, car2);
+            Assert.True(car1.Equals(car2));
         }
 
         [Fact]
@@ -51,8 +51,8 @@ namespace Eatech.FleetManager.UnitTests.ApplicationCore.Services.CarServiceTests
                 modelYear: 1999);
             Car car3 = await carService.Remove(id);
 
-            Assert.NotEqual(car1, car2);
-            Assert.Equal(car2, car3);
+            Assert.False(car1.Equals(car2));
+            Assert.True(car2.Equals(car3));
         }
         [Fact]
         public async void FakeChangeCar()
@@ -79,8 +79,8 @@ namespace Eatech.FleetManager.UnitTests.ApplicationCore.Services.CarServiceTests
                 enginePower: 42);
             Car car3 = await carService.Remove(id);
 
-            Assert.Equal(car1, car2);
-            Assert.Equal(car2, car3);
+            Assert.True(car1.Equals(car2));
+            Assert.True(car2.Equals(car3));
         }
     }
 

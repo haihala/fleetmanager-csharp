@@ -19,5 +19,19 @@ namespace Eatech.FleetManager.ApplicationCore.Entities
         public int? EngineSize { get; set; }
 
         public int? EnginePower { get; set; }
+
+        public bool Equals(Car other)
+        {
+            // Code itself doesn't need this at any point, used for tests.
+            return (
+                Id == other.Id &&
+                ModelYear == other.ModelYear &&
+                Model == other.Model &&
+                Manufacturer == other.Manufacturer &&
+                Registration == other.Registration &&
+                InspectionDate == other.InspectionDate &&
+                EngineSize == other.EngineSize &&
+                EnginePower == other.EnginePower);
+        }
     }
 }
