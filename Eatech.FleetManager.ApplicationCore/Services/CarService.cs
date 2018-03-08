@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using Eatech.FleetManager.ApplicationCore.Entities;
 using Eatech.FleetManager.ApplicationCore.Interfaces;
 using Microsoft.Data.Sqlite;
+using System.IO;
+using System.Linq;
 
 namespace Eatech.FleetManager.ApplicationCore.Services
 {
@@ -12,7 +14,30 @@ namespace Eatech.FleetManager.ApplicationCore.Services
         SqliteConnection DBConnection;
         public CarService ()
         {
-            DBConnection = new SqliteConnection("Data Source=../Eatech.FleetManager.ApplicationCore/database.sqlite;");
+            // Disclaimer on the following path mess.
+            // Tests are ran from a different path, making relative paths impossible.
+            // C# executable has no data on it's parent directory, so the only way to dynamically find the database is something like the following.
+            // That doesn't mean I'm proud of it.
+            string[] path = AppContext.BaseDirectory.Split(Path.DirectorySeparatorChar);
+
+            int i = 0;
+            while (i < path.Length)
+            {
+                if (path[i] == "fleetmanager-csharp")
+                {
+                    break;
+                }
+                i++;
+            }
+            List<string> pathList = path.Take(i+1).ToList();
+            pathList.Add("Eatech.FleetManager.ApplicationCore");
+            pathList.Add("database.sqlite");
+
+            string databasePath = String.Join('/', pathList.ToArray());
+            DBConnection = new SqliteConnection(
+                String.Format(
+                    "Data Source={0};",
+                    databasePath));
             DBConnection.Open();
         }
 
